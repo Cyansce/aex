@@ -109,7 +109,7 @@ export default {
   methods: {
     init_data: function() {
       fetch.get(accounts_url).then(res => {
-        this.accounts = res.data;
+        this.accounts = _.filter(res.data, item => {return item.is_api == true})
       });
       fetch.get(zones_url).then(res => {
         this.zones = res.data;

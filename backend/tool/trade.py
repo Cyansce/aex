@@ -67,13 +67,20 @@ def make_order(account_id, mk_type, trade_type, coinname, price, amount, gg_code
         params['gg_code'] = gg_code
 
     url = 'https://' + account.url + '/trade/newOrder2.php?n=' + str(random.random())
-    res = requests.post(
-        url,
-        data=params,
-        headers=headers,
-        cookies=cookies
-    )
-    return res.content.decode('utf-8')
+
+    try:
+        res = requests.post(
+            url,
+            data=params,
+            headers=headers,
+            cookies=cookies,
+            timeout=5
+        )
+        res_data = res.content.decode('utf-8')
+    except:
+        res_data = 'FAPI make order error -----'
+    
+    return res_data
 
 
 def get_order_list(account_id, mk_type, coinname):
@@ -81,13 +88,14 @@ def get_order_list(account_id, mk_type, coinname):
     if account is None:
         return None
     url = 'https://' + account.url + '/trade/getUserOrder.php?mk_type={0}&coinname={1}&n='.format(mk_type, coinname) + str(random.random())
-    print(url)
+    # print(url)
     cookies = {
         'AEX_md5': account.md5,
         'AEX_id': account.user_id
     }
-    res = requests.get(url, headers=headers, cookies=cookies)
+
     try:
+        res = requests.get(url, headers=headers, cookies=cookies, timeout=5)
         res_data = json.loads(res.content.decode('utf-8'))
     except:
         res_data = None
@@ -108,9 +116,8 @@ def get_clinch_orders(account_id, mk_type, coinname, page):
         'AEX_md5': account.md5,
         'AEX_id': account.user_id
     }
-    res = requests.get(url, headers=headers, cookies=cookies)
-    # print(res.text)
     try:
+        res = requests.get(url, headers=headers, cookies=cookies, timeout=5)
         res_data = json.loads(res.content.decode('utf-8'))
     except:
         res_data = []
@@ -126,5 +133,11 @@ def cancel_order(account_id, order_id, mk_type, coinname):
         'AEX_md5': account.md5,
         'AEX_id': account.user_id
     }
-    res = requests.get(url, headers=headers, cookies=cookies)
-    return res.text
+    try:
+        res = requests.get(url, headers=headers, cookies=cookies, timeout=5)
+        res_data = res.text
+    except Exception as e:
+        print(e)
+        res_data = 'cancel error -----'
+    
+    return res_data

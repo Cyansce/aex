@@ -18,26 +18,30 @@ def make_order(account_id, zone, coin, trade_type, price, amount):
 
     params = submitOrder_params(account, trade_type, zone, price, amount, coin)
 
-    res = requests.post(
-        SUBMITORDER_URL,
-        headers = HEADERS,
-        data = params
-    )
-    res_data = res.content.decode('utf-8')
-    if 'succ' in res_data:
-        log.write_order_log(
-            True, 
-            True,
-            account_id,
-            account.name, 
-            coin,
-            zone,
-            trade_type,
-            price,
-            amount,
-            res_data 
-            )
-
+    try:
+        res = requests.post(
+            SUBMITORDER_URL,
+            headers = HEADERS,
+            data = params,
+            timeout = 5
+        )
+        res_data = res.content.decode('utf-8')
+        if 'succ' in res_data:
+            log.write_order_log(
+                True, 
+                True,
+                account_id,
+                account.name, 
+                coin,
+                zone,
+                trade_type,
+                price,
+                amount,
+                res_data 
+                )
+    except:
+        res_data = 'make order error-----'  
+    
     return res_data
 
 
@@ -48,16 +52,17 @@ def get_order_list(account_id, zone, coin):
     
     params = order_list_params(account, zone, coin)
 
-    res = requests.post(
-        ORDER_LIST_URL,
-        headers=HEADERS,
-        data=params
-    )
     try:
+        res = requests.post(
+            ORDER_LIST_URL,
+            headers=HEADERS,
+            data=params,
+            timeout=5
+        )
         res_data = json.loads(res.content.decode('utf-8'))
     except:
         res_data = []
-    
+
     return res_data
 
 
@@ -68,9 +73,15 @@ def cancel_order(account_id, order_id, zone, coin):
     
     params = cancel_order_params(account, order_id, zone, coin)
 
-    res = requests.post(
-        CANCEL_ORDER_URL,
-        headers=HEADERS,
-        data=params
-    )
-    return res.text
+    try:
+        res = requests.post(
+            CANCEL_ORDER_URL,
+            headers=HEADERS,
+            data=params,
+            timeout=5
+        )
+        res_data = res.text
+    except:
+        res_data = 'cancel error'
+    
+    return res_data
