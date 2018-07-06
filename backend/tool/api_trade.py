@@ -11,6 +11,7 @@ from backend.apiconfig import CANCEL_ORDER_URL, cancel_order_params
 
 def get_ticker(coin, zone):
     url = TICKER_URL + '?c={0}&mk_type={1}'.format(coin, zone)
+    print(url)
     res = requests.get(
         url,
         headers = HEADERS

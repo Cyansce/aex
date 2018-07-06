@@ -29,6 +29,7 @@
         <!-- <dd><router-link to="/dataeidtkey">Key</router-link></dd>       -->
         <dd><router-link to="/dataeidtaccount">账户</router-link></dd>      
         <dd><router-link to="/dataeditstrategyorderloop">循环挂单策略</router-link></dd>      
+        <dd><router-link to="/apiconfig">API网址修改</router-link></dd>      
       </dl>
     </li>
     <li class="layui-nav-item"><a href="">社区</a></li>

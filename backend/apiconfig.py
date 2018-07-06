@@ -2,7 +2,7 @@ import time, hashlib
 
 from backend.models import APIConfig
 
-config = APIConfig.objects.first()
+config = APIConfig.objects.filter(is_default=True).first()
 
 SUBMITORDER_URL = 'https://api.bit.cc/submitOrder.php'
 TICKER_URL = 'https://api.bit.cc/ticker.php'

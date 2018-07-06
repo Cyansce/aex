@@ -14,6 +14,12 @@ export const api_accounts_url = '/api_accounts'
 export const add_api_account_url = '/add_api_account'
 export const del_api_account_url = '/del_api_account'
 
+// api config
+export const api_configs_url = '/api_configs'
+export const add_api_config_url = '/add_api_config'
+export const del_api_config_url = '/del_api_config'
+export const set_default_api_config_url = '/set_default_api_config'
+
 // api trade
 export const ticker_url = '/ticker'
 export const balance_url = '/balance'
@@ -49,6 +55,7 @@ export const update_strategy_url = '/update_strategy'
 export const make_order_url = '/make_order'
 export const get_order_list_url = '/get_order_list'
 export const cancel_order_with_trade_url = '/cancel_order_with_trade'
+
 
 
 

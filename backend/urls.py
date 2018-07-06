@@ -4,7 +4,7 @@ from . import views
 from backend.view import coin_views, zone_views, api_accounts_views
 
 from backend.view import api_trade_views, log_views, trade_views
-from backend.view import account_views, strategy_loop_views
+from backend.view import account_views, strategy_loop_views, api_config_views
 from backend.view import reservation_order_views
 
 urlpatterns = [
@@ -35,6 +35,11 @@ urlpatterns += {
     path('add_strategy', strategy_loop_views.add_strategy, name='add_strategy' ),
     path('del_strategy/<int:id>', strategy_loop_views.del_strategy, name='del_strategy' ),
     path('update_strategy/<int:id>', strategy_loop_views.update_strategy, name='update_strategy' ),
+
+    path('api_configs', api_config_views.all, name='api_configs'),
+    path('add_api_config', api_config_views.add, name='add_api_config'),
+    path('del_api_config/<int:id>', api_config_views.delete, name='del_api_config'),
+    path('set_default_api_config/<int:id>', api_config_views.set_default, name='set_default_api_config'),
 }
 
 # api交易区

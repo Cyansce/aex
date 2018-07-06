@@ -12,6 +12,7 @@ import StrategyLoopAPITrade from '@/components/StrategyLoopAPITrade'
 import DataEditStrategyOrderLoop from '@/components/DataEditStrategyOrderLoop'  
 import OrderManageStrategy from '@/components/OrderManageStrategy'  
 import ReservationOrder from '@/components/ReservationOrder'
+import APIConfig from '@/components/APIConfig'
 
 Vue.use(Router)
 
@@ -76,6 +77,11 @@ export default new Router({
       path: '/reservationorder',
       name: 'ReservationOrder',
       component: ReservationOrder
+    },
+    {
+      path: '/apiconfig',
+      name: 'APIConfig',
+      component: APIConfig
     },
   ]
 })

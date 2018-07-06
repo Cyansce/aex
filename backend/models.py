@@ -105,5 +105,8 @@ class ReservationOrder(models.Model):
 
 class APIConfig(models.Model):
     url = models.CharField(max_length=200)
+    is_default = models.BooleanField(default=False)
+
+
     
 
