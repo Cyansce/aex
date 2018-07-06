@@ -11,6 +11,7 @@
       <dl class="layui-nav-child"> <!-- 二级菜单 -->
         <dd><router-link to="/loopapitrade">API挂单</router-link></dd>
         <dd><router-link to="/trade">直接挂单</router-link></dd>   
+        <dd><router-link to="/reservationorder">预约挂单</router-link></dd>   
       </dl>
     </li>
     <li class="layui-nav-item">

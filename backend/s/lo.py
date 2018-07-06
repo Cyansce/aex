@@ -94,6 +94,7 @@ def loop():
             res = trade.make_order(strategy.account.id, strategy.zone_name, trade_type, strategy.coin_name, new_price, amount)
 
             print('- 挂单结果 ------', res)
+            print('-')
 
             if res == 'succ':
                 log.write_order_log_not_api_strategy_complete(

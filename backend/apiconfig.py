@@ -1,10 +1,21 @@
 import time, hashlib
 
+from backend.models import APIConfig
+
+config = APIConfig.objects.first()
+
 SUBMITORDER_URL = 'https://api.bit.cc/submitOrder.php'
-TICKER_URL = 'https://api.bit.cc/ticker.php?c={0}&mk_type={1}'
+TICKER_URL = 'https://api.bit.cc/ticker.php'
 BALANCE_URL = 'https://api.bit.cc/getMyBalance.php'
 ORDER_LIST_URL = 'https://api.bit.cc/getOrderList.php'
 CANCEL_ORDER_URL = 'https://api.bit.cc/cancelOrder.php'
+
+if config is not None:
+    SUBMITORDER_URL = 'https://{url}/submitOrder.php'.format(url=config.url)
+    TICKER_URL = 'https://{url}/ticker.php'.format(url=config.url)
+    BALANCE_URL = 'https://{url}/getMyBalance.php'.format(url=config.url)
+    ORDER_LIST_URL = 'https://{url}/getOrderList.php'.format(url=config.url)
+    CANCEL_ORDER_URL = 'https://{url}/cancelOrder.php'.format(url=config.url)
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'

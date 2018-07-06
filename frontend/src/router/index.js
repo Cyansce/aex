@@ -11,6 +11,7 @@ import OrderManageAEX from '@/components/OrderManageAEX'
 import StrategyLoopAPITrade from '@/components/StrategyLoopAPITrade'  
 import DataEditStrategyOrderLoop from '@/components/DataEditStrategyOrderLoop'  
 import OrderManageStrategy from '@/components/OrderManageStrategy'  
+import ReservationOrder from '@/components/ReservationOrder'
 
 Vue.use(Router)
 
@@ -70,6 +71,11 @@ export default new Router({
       path: '/ordermanagestrategy',
       name: 'OrderManageStrategy',
       component: OrderManageStrategy
+    },
+    {
+      path: '/reservationorder',
+      name: 'ReservationOrder',
+      component: ReservationOrder
     },
   ]
 })

@@ -26,6 +26,11 @@ export const order_logs_url = '/order_logs'
 export const init_order_logs_url = '/init_order_logs'
 export const cancel_order_url = '/cancel_order'
 
+// reservation_order
+export const reservation_orders_url = '/reservation_orders'
+export const add_reservation_order_url = '/add_reservation_order'
+export const cancel_reservation_order_url = '/cancel_reservation_order'
+
 // account
 export const accounts_url = '/accounts'
 export const add_account_url = '/add_account'

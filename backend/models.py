@@ -89,5 +89,21 @@ class OrderLoopNumbersLog(models.Model):
     number = models.CharField(max_length=20)
     create_at = models.DateTimeField(auto_now_add=True)
 
+class ReservationOrder(models.Model):
+    number = models.CharField(max_length=20)
+    trade_type = models.IntegerField()
+    price = models.FloatField()
+    amount = models.FloatField()
+    reservation_price = models.FloatField()
+    coin_name = models.CharField(max_length=20) # 币种
+    zone_name = models.CharField(max_length=20) # 交易区
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    is_complete = models.BooleanField(default=False)
+    is_cancel = models.BooleanField(default=False)
+
+class APIConfig(models.Model):
+    url = models.CharField(max_length=200)
     
 

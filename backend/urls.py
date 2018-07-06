@@ -5,6 +5,7 @@ from backend.view import coin_views, zone_views, api_accounts_views
 
 from backend.view import api_trade_views, log_views, trade_views
 from backend.view import account_views, strategy_loop_views
+from backend.view import reservation_order_views
 
 urlpatterns = [
     path('zone', views.zone, name='zone'),
@@ -50,6 +51,13 @@ urlpatterns += [
     path('init_order_logs', log_views.init_order_logs, name='init_order_logs'),
     path('order_logs', log_views.order_logs, name='order_logs'),
     path('cancel_order/<int:id>', log_views.cancel_order, name='cancel_order'),
+]
+
+# reservation_order
+urlpatterns += [
+    path('reservation_orders', reservation_order_views.reservation_orders, name='reservation_orders'),
+    path('add_reservation_order', reservation_order_views.add_reservation_order, name='add_reservation_order'),
+    path('cancel_reservation_order/<int:id>', reservation_order_views.cancel_reservation_order, name='cancel_reservation_order'),
 ]
 
 # 直接交易区

@@ -17,10 +17,8 @@ def ticker(request):
     coin = Coin.objects.get(id=coin_id)
     if coin is None:
         return HttpResponse('')
-    url = TICKER_URL.format(coin, coin.zone.name)
 
-    res = requests.get(url, headers = HEADERS)
-    return HttpResponse(res)
+    return HttpResponse(api_trade.get_ticker(coin.name, coin.zone.name))
 
 def balance(request, account_id):
     if account_id <= 0 or account_id == '':
