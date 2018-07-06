@@ -90,6 +90,28 @@ def make_order_reservation(account_id, zone, coin, trade_type, price, amount, re
     return res_data + ' - ' + write_msg
 
 
+def just_make_order(account_id, zone, coin, trade_type, price, amount):
+    account = Account.objects.get(id=account_id)
+    if account is None:
+        return 'account is null'
+
+    params = submitOrder_params(account, trade_type, zone, price, amount, coin)
+
+    try:
+        res = requests.post(
+            SUBMITORDER_URL,
+            headers = HEADERS,
+            data = params,
+            timeout = 5
+        )
+        res_data = res.content.decode('utf-8')
+    except:
+        res_data = 'make order error'
+    return res_data
+
+
+
+
 def get_order_list(account_id, zone, coin):
     account = Account.objects.get(id=account_id)
     if account is None:

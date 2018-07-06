@@ -95,6 +95,7 @@ class ReservationOrder(models.Model):
     price = models.FloatField()
     amount = models.FloatField()
     reservation_price = models.FloatField()
+    reservation_number = models.CharField(max_length=20, null=True)
     coin_name = models.CharField(max_length=20) # 币种
     zone_name = models.CharField(max_length=20) # 交易区
     account = models.ForeignKey(Account, on_delete=models.CASCADE)

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <blockquote class="layui-elem-quote"><h2>预约挂单</h2></blockquote>
+        <blockquote class="layui-elem-quote"><h2>预约挂单 - 仅供API账户操作</h2></blockquote>
 
         <div class="layui-form">
             <table class="layui-table" style="width:500px;">
@@ -97,13 +97,14 @@
                         <td>数量</td>
                         <td>总价</td>
                         <td>预约价格</td>
+                        <td>预约Number</td>
                         <td>预计盈利</td>
                         <td>状态</td>
                         <td>操作</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in reservation_orders" :key="item.id">
+                    <tr v-for="item in reservation_orders" :key="item.id" :class="{'layui-bg-gray':item.is_cancel, 'layui-bg-green': !item.is_complete&&!item.is_cancel}">
                         <td>{{ item.id }}</td>
                         <td>{{ item.number }}</td>
                         <td>{{ item.trade_type | buy-sell }}</td>
@@ -111,6 +112,7 @@
                         <td>{{ item.amount }}</td>
                         <td>{{ (item.amount * item.price).toFixed(6) }}</td>
                         <td>{{ item.reservation_price }}</td>
+                        <td>{{ item.reservation_number }}</td>
                         <td v-if="item.trade_type == 1">{{ ((item.reservation_price - item.price) * item.amount).toFixed(6) }}</td>
                         <td v-if="item.trade_type == 2">{{ ((item.price - item.reservation_price) * item.amount).toFixed(6) }}</td>
                         <td>{{ item.is_cancel ? '已取消' : item.is_complete ? '已完成' : '挂单中' }}</td>
@@ -226,8 +228,9 @@ export default {
     },
     methods: {
         init_data:function(){
-            fetch.get(accounts_url).then(res=>{this.accounts=res.data})
+            fetch.get(accounts_url).then(res=>{this.accounts=_.filter(res.data,item=>{return item.is_api})})
             fetch.get(zones_url).then(res=>{this.zones=res.data})
+            this.get_reservation_orders()
             this.account = tool.get_storage_obj('s_account') || {}
             this.zone = tool.get_storage_obj('s_zone') || {}
             if (this.zone.id){
@@ -237,7 +240,6 @@ export default {
             if (this.coin.id){
                 this.get_ticker(this.coin.id)
             }
-            this.get_reservation_orders()
         },
         refresh_form:function(){
             // layui.form.render()
@@ -317,6 +319,7 @@ export default {
             }).then(res => {
                 layer.closeAll()
                 layer.msg(res.data)
+                this.get_reservation_orders()
             }).catch(error => {
                 layer.closeAll()
                 layer.msg(error.message)

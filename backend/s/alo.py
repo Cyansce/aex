@@ -1,6 +1,6 @@
 import time, datetime
 
-from backend.models import OrderLog, StrategyOrderLoop
+from backend.models import OrderLog, StrategyOrderLoop, ReservationOrder
 
 from backend.tool import api_trade
 
@@ -96,9 +96,10 @@ def loop():
                     init_order.complete = True
                     init_order.is_strategy_complete = True
                     init_order.save()
-            # else:
-            #     print('当前挂单未完成，请稍等--------')
-            #     print('-')
+        
+        # 开始循环预约单
+        # 放这里目的是可以重复使用aex挂单列表 aex_order_ids
+        loop_reservation_order(aex_order_ids)
 
 
 
@@ -113,6 +114,56 @@ def extract_order_list_ids(order_list):
             order_ids.append(order['id'])
     return order_ids
     
+
+
+# 
+# 预约单循环
+# 
+def loop_reservation_order(aex_order_ids):
+    print('-')
+    print('- Reservation Order -')
+    print('-')
+    # 1.查找所有 已经挂的预约单 
+
+    init_r_orders = ReservationOrder.objects.filter(
+                                    is_complete=False,
+                                    is_cancel=False
+                                )
+    # 2.如果该单已成交，便开始挂对应的预约价格的单
+    #   并修改相应的状态
+    print('- 当前预约单条数：', len(init_r_orders))
+    print('-')
+    for r_order in init_r_orders:
+        if r_order.number not in aex_order_ids:
+            trade_type = 2 if r_order.trade_type == 1 else 1
+            print('-')
+            print('- 原始预约价格：', r_order.price)
+            print('-')
+            print('- 预约交易类型：', trade_type)
+            print('-')
+            print('- 预约价格：', r_order.reservation_price)
+            print('-')
+
+            res_data = api_trade.just_make_order(
+                        r_order.account_id,
+                        r_order.zone_name,
+                        r_order.coin_name,
+                        trade_type,
+                        r_order.reservation_price,
+                        r_order.amount
+                    )
+            print('- 预约挂单结果：', res_data)
+            print('-')
+            if 'succ' in res_data:
+                r_order.is_complete = True
+                temp = res_data.split('|')
+                if len(temp) == 2:
+                    r_order.reservation_number = temp[1]
+                r_order.save()
+
+
+
+
 
 def start():
     while(True):

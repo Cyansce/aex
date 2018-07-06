@@ -1,6 +1,6 @@
 <template>
     <div>
-        <blockquote class="layui-elem-quote"><h2>API网址修改</h2></blockquote>
+        <blockquote class="layui-elem-quote"><h2>API网址修改 - 修改后请重启全部服务</h2></blockquote>
 
         <button class="layui-btn" @click="open_wrapper">新增</button>
         <table class="layui-table">
@@ -8,7 +8,7 @@
                 <td>{{item.id}}</td>
                 <td>{{item.url}}</td>
                 <td>
-                    <button v-if="!item.is_default" class="layui-btn layui-btn-primary" @click="set_default(item.id)">设为默认</button>
+                    <button v-if="!item.is_default" class="layui-btn" @click="set_default(item.id)">设为默认</button>
                     <button class="layui-btn layui-btn-primary" @click="del(item.id)">删除</button>
                 </td>
             </tr>
