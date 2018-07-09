@@ -1,4 +1,4 @@
-import random, requests, json
+import random, requests, json, time
 from datetime import datetime
 
 from backend.models import Account
@@ -140,4 +140,41 @@ def cancel_order(account_id, order_id, mk_type, coinname):
         print(e)
         res_data = 'cancel error -----'
     
+    return res_data
+
+
+def get_balance(account_id):
+    # https://www.bit.cc/trade/getMyBalance.php?n=0.260682626512663
+    account = Account.objects.get(id=account_id)
+    if account is None:
+        return None
+    url = 'https://' + account.url + '/trade/getMyBalance.php?n=' + str(random.random())
+    cookies = {
+        'AEX_md5': account.md5,
+        'AEX_id': account.user_id
+    }
+    data = {
+        'check': account.md5
+    }
+    try:
+        res = requests.post(url, data=data, headers=headers, cookies=cookies, timeout=5)
+        res_data = json.loads(res.content.decode('utf-8'))
+        print(res_data)
+    except:
+        res_data = 'get balance error'
+    return res_data
+
+def get_trade_list30(account_id, mk_type, coinname):
+    # https://www.bit.cc/trade/getTradeList30.php?coinname=BTC&mk_type=CNC&grade=0&n=0.4769740767711792&_=1531021253981
+    account = Account.objects.get(id=account_id)
+    if account is None:
+        return None
+    url = 'https://' + account.url + '/trade/getTradeList30.php?coinname={0}&mk_type={1}&grade=0&n={2}&_={3}'.format(coinname, mk_type, str(random.random()), str(int(time.time())))
+
+    try:
+        res = requests.get(url, headers=headers)
+        res_data = json.loads(res.content.decode('utf-8'))
+    except:
+        res_data = 'get trade list error'
+
     return res_data

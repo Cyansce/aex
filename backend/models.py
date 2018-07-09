@@ -109,5 +109,14 @@ class APIConfig(models.Model):
     is_default = models.BooleanField(default=False)
 
 
+class GatFlushLog(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    coin_name = models.CharField(max_length=20)
+    zone_name = models.CharField(max_length=20)
+    price = models.FloatField()
+    amount = models.FloatField()
+    trade_type = models.IntegerField()
+    create_at = models.DateTimeField(auto_now_add=True)
+
     
 

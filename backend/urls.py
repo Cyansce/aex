@@ -6,6 +6,7 @@ from backend.view import coin_views, zone_views, api_accounts_views
 from backend.view import api_trade_views, log_views, trade_views
 from backend.view import account_views, strategy_loop_views, api_config_views
 from backend.view import reservation_order_views
+from backend.view import gat_flush_views
 
 urlpatterns = [
     path('zone', views.zone, name='zone'),
@@ -72,4 +73,12 @@ urlpatterns += [
     path('test_make_order/<int:account_id>', trade_views.test_make_order, name='test_make_order'),
     path('get_order_list', trade_views.get_order_list, name='get_order_list'),
     path('cancel_order_with_trade', trade_views.cancel_order, name='cancel_order_with_trade'),
+]
+
+# gat flush
+urlpatterns += [
+    path('get_balance/<int:account_id>', gat_flush_views.balance, name='get_balance'),
+    path('get_trade_list30/<int:account_id>', gat_flush_views.get_trade_list30, name='get_trade_list30'),
+    path('gat_flush_make_order', gat_flush_views.make_order, name='gat_flush_make_order'),
+    path('gat_flush_logs', gat_flush_views.gat_flush_logs, name='gat_flush_logs'),
 ]

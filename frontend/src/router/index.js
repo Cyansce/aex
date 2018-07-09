@@ -13,6 +13,8 @@ import DataEditStrategyOrderLoop from '@/components/DataEditStrategyOrderLoop'
 import OrderManageStrategy from '@/components/OrderManageStrategy'  
 import ReservationOrder from '@/components/ReservationOrder'
 import APIConfig from '@/components/APIConfig'
+import GatFlush from '@/components/GatFlush'
+
 
 Vue.use(Router)
 
@@ -82,6 +84,11 @@ export default new Router({
       path: '/apiconfig',
       name: 'APIConfig',
       component: APIConfig
+    },
+    {
+      path: '/gatflush',
+      name: 'GatFlush',
+      component: GatFlush
     },
   ]
 })

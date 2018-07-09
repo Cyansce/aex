@@ -56,6 +56,11 @@ export const make_order_url = '/make_order'
 export const get_order_list_url = '/get_order_list'
 export const cancel_order_with_trade_url = '/cancel_order_with_trade'
 
+// gat flush
+export const get_balance_url = '/get_balance'
+export const get_trade_list30_url = '/get_trade_list30'
+export const gat_flush_make_order_url = '/gat_flush_make_order'
+export const gat_flush_logs_url = '/gat_flush_logs'
 
 
 
