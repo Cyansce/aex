@@ -46,7 +46,7 @@ def loop():
             continue
         # 2.查找并处理对应aex网站上的挂单
         aex_order_ids = extract_order_list_ids(api_trade.get_order_list(strategy.account.id, strategy.zone_name, strategy.coin_name))
-        # print('----------------我的挂单id----------------')
+        # print('----------------我的挂单id----------------', len(aex_order_ids))
         # print(aex_order_ids)
         if len(aex_order_ids) == 0:
             print('- 获取不到挂单，查下ip是否更改---')
@@ -99,7 +99,7 @@ def loop():
         
         # 开始循环预约单
         # 放这里目的是可以重复使用aex挂单列表 aex_order_ids
-        loop_reservation_order(aex_order_ids)
+        loop_reservation_order(aex_order_ids, strategy.zone_name, strategy.coin_name)
 
 
 
@@ -119,7 +119,7 @@ def extract_order_list_ids(order_list):
 # 
 # 预约单循环
 # 
-def loop_reservation_order(aex_order_ids):
+def loop_reservation_order(aex_order_ids, zone_name, coin_name):
     print('-')
     print('- Reservation Order -')
     print('-')
@@ -134,7 +134,7 @@ def loop_reservation_order(aex_order_ids):
     print('- 当前预约单条数：', len(init_r_orders))
     print('-')
     for r_order in init_r_orders:
-        if r_order.number not in aex_order_ids:
+        if r_order.number not in aex_order_ids and r_order.zone_name == zone_name and r_order.coin_name == coin_name:
             trade_type = 2 if r_order.trade_type == 1 else 1
             print('-')
             print('- 原始预约价格：', r_order.price)
